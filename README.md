@@ -2,6 +2,8 @@
 
 ![Design preview for the Tic Tac Toe coding challenge](./public/preview.jpg)
 
+> Live preview at: https://sergio-cravas.github.io/tic-tac-toe-game--nextjs/
+
 ## Welcome! 👋
 
 Thanks for purchasing this premium Frontend Mentor coding challenge.
