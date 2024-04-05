@@ -23,8 +23,11 @@
   }
 
   &--icon-only {
-    padding: 1rem 0;
+    padding: 13px 0 15px 0;
     border-radius: 10px;
+
+    width: 52px;
+    height: 52px;
   }
 
   &--yellow {
@@ -33,6 +36,11 @@
   
     &:hover {
       background-color: $light-yellow--hover;
+    }
+
+    &:active {
+      background-color: darken($color: $light-yellow, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #CC8B13, $amount: 10%);
     }
   }
 
@@ -43,6 +51,11 @@
     &:hover {
       background-color: $light-blue--hover;
     }
+
+    &:active {
+      background-color: darken($color: $light-blue, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #118C87, $amount: 10%);
+    }
   }
 
   &--gray {
@@ -51,6 +64,11 @@
   
     &:hover {
       background-color: $silver--hover;
+    }
+
+    &:active {
+      background-color: darken($color: $silver, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #6B8997, $amount: 10%);
     }
   }
 }

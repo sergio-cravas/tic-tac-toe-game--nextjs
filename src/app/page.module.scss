@@ -1,8 +1,38 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+
   align-items: center;
+  justify-content: center;
+
   padding: 6rem;
   min-height: 100vh;
+
+  gap: 20px;
+}
+
+.head {
+  width: calc(144px * 3 + 20px * 2); // TODO: Pending to be refactored.
+
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  &-row {
+    display: flex;
+    gap: 20px;
+  }
+}
+
+.score {
+  display: flex;
+  gap: 20px;
 }

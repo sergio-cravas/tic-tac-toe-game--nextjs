@@ -1,8 +1,6 @@
 @import '@/theme/colors.module.scss';
 
 .text {
-  color: $silver;
-
   &--heading {
     font-weight: 700;
     text-transform: uppercase;
@@ -32,5 +30,13 @@
     font-weight: 500;
     font-size: 0.875rem;
     letter-spacing: 0.88px;
+  }
+
+  &--light {
+    color: $silver;
+  }
+
+  &--dark {
+    color: $dark-navy;
   }
 }
