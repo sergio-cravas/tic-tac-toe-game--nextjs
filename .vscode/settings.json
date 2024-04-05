@@ -1,0 +1,11 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.printWidth": 128,
+  "prettier.singleQuote": true,
+  "editor.formatOnSave": true,
+  "material-icon-theme.folders.associations": {
+    "_views": "views",
+    "_components": "components"
+  }
+}
