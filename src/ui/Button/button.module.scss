@@ -1,0 +1,56 @@
+@import '@/theme/colors.module.scss';
+
+.button {
+  display: inline-block;
+
+  border: 0;
+
+  color: $dark-navy;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  &--primary {
+    padding: 15px 0 17px 0;
+    border-radius: 15px;
+  }
+
+  &--secondary {
+    padding: 1rem 0;
+    border-radius: 10px;
+  }
+
+  &--icon-only {
+    padding: 1rem 0;
+    border-radius: 10px;
+  }
+
+  &--yellow {
+    background-color: $light-yellow;
+    box-shadow: inset 0px -8px 0px #CC8B13;
+  
+    &:hover {
+      background-color: $light-yellow--hover;
+    }
+  }
+
+  &--blue {
+    background-color: $light-blue;
+    box-shadow: inset 0px -8px 0px #118C87;
+  
+    &:hover {
+      background-color: $light-blue--hover;
+    }
+  }
+
+  &--gray {
+    background-color: $silver;
+    box-shadow: inset 0px -8px 0px #6B8997;
+  
+    &:hover {
+      background-color: $silver--hover;
+    }
+  }
+}
