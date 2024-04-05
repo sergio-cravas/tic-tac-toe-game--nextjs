@@ -21,40 +21,46 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.head}>
-        <Logo />
+      <div className={styles.container}>
+        <div className={styles.head}>
+          <div className={styles['head__logo']}>
+            <Logo />
+          </div>
 
-        <TurnBadge currentPlayer={currentPlayer} />
+          <TurnBadge currentPlayer={currentPlayer} />
 
-        <Button variant="icon-only" color="gray" label={<RestartIcon />} />
-      </div>
-
-      <div className={styles.field}>
-        <div className={styles['field-row']}>
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+          <div className={styles['head__restart-button']}>
+            <Button variant="icon-only" color="gray" label={<RestartIcon />} />
+          </div>
         </div>
 
-        <div className={styles['field-row']}>
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+        <div className={styles.field}>
+          <div className={styles['field-row']}>
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+          </div>
+
+          <div className={styles['field-row']}>
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+          </div>
+
+          <div className={styles['field-row']}>
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+          </div>
         </div>
 
-        <div className={styles['field-row']}>
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
+        <div className={styles.score}>
+          <ScoreBadge title="O (CPU)" points={14} backgroundColor={colors.lightBlue} />
+
+          <ScoreBadge title="TIES" points={32} backgroundColor={colors.silver} />
+
+          <ScoreBadge title="X (YOU)" points={11} backgroundColor={colors.lightYellow} />
         </div>
-      </div>
-
-      <div className={styles.score}>
-        <ScoreBadge title="O (CPU)" points={14} backgroundColor={colors.lightBlue} />
-
-        <ScoreBadge title="TIES" points={32} backgroundColor={colors.silver} />
-
-        <ScoreBadge title="X (YOU)" points={11} backgroundColor={colors.lightYellow} />
       </div>
     </main>
   );
