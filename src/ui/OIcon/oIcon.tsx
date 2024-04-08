@@ -26,7 +26,7 @@ interface OIconProps {
  */
 export const OIcon = ({ size = 40, variant = 'solid', color = colors.lightYellow }: OIconProps) => {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={size} height={size} viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
       {variant === 'solid' && (
         <path
           fill={color}
@@ -45,3 +45,6 @@ export const OIcon = ({ size = 40, variant = 'solid', color = colors.lightYellow
     </svg>
   );
 };
+
+
+
