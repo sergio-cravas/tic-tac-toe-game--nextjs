@@ -4,26 +4,26 @@
   &--heading {
     font-weight: 700;
     text-transform: uppercase;
+  }
 
-    &#{&}--large {
-      font-size: 2.5rem;
-      letter-spacing: 2.5px;
-    }
+  &--large {
+    font-size: 2.5rem;
+    letter-spacing: 2.5px;
+  }
 
-    &#{&}--medium {
-      font-size: 1.5rem;
-      letter-spacing: 1.5px;
-    }
+  &--medium {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
 
-    &#{&}--small {
-      font-size: 1.25rem;
-      letter-spacing: 1.25px;
-    }
+  &--small {
+    font-size: 1.25rem;
+    letter-spacing: 1.25px;
+  }
 
-    &#{&}--extra-small {
-      font-size: 1rem;
-      letter-spacing: 1px;
-    }
+  &--extra-small {
+    font-size: 1rem;
+    letter-spacing: 1px;
   }
 
   &--body {

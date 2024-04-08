@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, createContext, useCallback, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useCallback, useContext, useState } from "react";
+import { ScoreContext, ScoreContextProps } from "./scoreContext";
 
 type PlayerTile = "x" | "o";
 
@@ -38,6 +39,8 @@ type GameContextProviderProps = {
 };
 
 function GameContextProvider({ children }: GameContextProviderProps) {
+  const { dispatchWinner } = useContext<ScoreContextProps>(ScoreContext);
+
   const [winner, setWinner] = useState<any>();
   const [winningTiles, setWinningTiles] = useState<string[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>("x");
@@ -49,12 +52,14 @@ function GameContextProvider({ children }: GameContextProviderProps) {
 
       const { winner, winningTiles: _winningTiles } = checkWhoIsWinner(newTiles, currentPlayer);
 
+      if (winner) dispatchWinner(winner);
+      
       setWinner(winner);
       setWinningTiles(_winningTiles)
       setTiles(newTiles);
       setCurrentPlayer((prev) => (prev === "o" ? "x" : "o"));
     },
-    [tiles, currentPlayer],
+    [tiles, currentPlayer, dispatchWinner],
   );
 
   const handleOnResetGame = useCallback(() => {

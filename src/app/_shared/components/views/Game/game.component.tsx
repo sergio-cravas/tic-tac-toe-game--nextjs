@@ -7,6 +7,7 @@ import { RestartIcon } from "@/ui/RestartIcon/restartIcon.component";
 import { TurnBadge } from "../../atoms/TurnBadge/turnBadge.component";
 import { ScoreBadge } from "../../atoms/ScoreBadge/scoreBadge.component";
 import { GameContextProps, GameContext } from "@/app/_shared/context/gameContext";
+import { ScoreContext, ScoreContextProps } from "@/app/_shared/context/scoreContext";
 
 import styles from './game.module.scss';
 import colors from '@/theme/colors.module.scss';
@@ -16,6 +17,7 @@ const GRID_COLUMNS = 3;
 
 export const Game = () => {
     const { tiles, winningTiles, currentPlayer, onPlay, onReset } = useContext<GameContextProps>(GameContext);
+    const { winsByX, winsByO, draws } = useContext<ScoreContextProps>(ScoreContext);
 
     return (
         <div className={styles.container}>
@@ -48,11 +50,11 @@ export const Game = () => {
             </div>
 
             <div className={styles.score}>
-                <ScoreBadge title="O (CPU)" points={14} backgroundColor={colors.lightBlue} />
+                <ScoreBadge title="X (CPU)" points={winsByX} backgroundColor={colors.lightBlue} />
 
-                <ScoreBadge title="TIES" points={32} backgroundColor={colors.silver} />
+                <ScoreBadge title="TIES" points={draws} backgroundColor={colors.silver} />
 
-                <ScoreBadge title="X (YOU)" points={11} backgroundColor={colors.lightYellow} />
+                <ScoreBadge title="O (YOU)" points={winsByO} backgroundColor={colors.lightYellow} />
             </div>
         </div>
     );
