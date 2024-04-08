@@ -2,22 +2,49 @@
 
 import React from 'react';
 
+import colors from '@/theme/colors.module.scss';
+
+type XIconVariant = 'solid' | 'outline';
+
 interface XIconProps {
   /**
    * The size of the icon in pixels. By default is 40.
    */
   size?: number;
+  /**
+   * The style variant of the Icon. By default is "solid".
+   */
+  variant?: XIconVariant;
+  /**
+   * Optional color of the icon. By default is light blue.
+   */
+  color?: string;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const XIcon = ({
-  size = 40,
-}: XIconProps) => {
+export const XIcon = ({ size = 40, variant = 'solid', color = colors.lightBlue }: XIconProps) => {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" clipRule="evenodd" d="M34.0709 1.51263C32.8993 0.341061 30.9998 0.341061 29.8283 1.51263L20 11.3409L10.1717 1.51264C9.00018 0.341062 7.10068 0.341065 5.9291 1.51264L1.51264 5.92911C0.341064 7.10068 0.341064 9.00017 1.51264 10.1717L11.3409 20L1.51264 29.8283C0.341062 30.9998 0.341065 32.8993 1.51264 34.0709L5.92911 38.4874C7.10068 39.6589 9.00017 39.6589 10.1717 38.4874L20 28.6591L29.8283 38.4874C30.9998 39.6589 32.8993 39.6589 34.0709 38.4874L38.4874 34.0709C39.6589 32.8993 39.6589 30.9998 38.4874 29.8283L28.6591 20L38.4874 10.1717C39.6589 9.00017 39.6589 7.10067 38.4874 5.9291L34.0709 1.51263Z" fill="#31C3BD"/>
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {variant === 'solid' && (
+        <path
+          fill={color}
+          fillRule="evenodd"
+          d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z"
+        />
+      )}
+
+      {variant === 'outline' && (
+        <path
+          fill="none"
+          stroke={color}
+          strokeWidth="2"
+          d="M51.12 1.269c.511 0 1.023.195 1.414.586l9.611 9.611c.391.391.586.903.586 1.415s-.195 1.023-.586 1.414L44.441 32l17.704 17.705c.391.39.586.902.586 1.414 0 .512-.195 1.024-.586 1.415l-9.611 9.611c-.391.391-.903.586-1.415.586a1.994 1.994 0 0 1-1.414-.586L32 44.441 14.295 62.145c-.39.391-.902.586-1.414.586a1.994 1.994 0 0 1-1.415-.586l-9.611-9.611a1.994 1.994 0 0 1-.586-1.415c0-.512.195-1.023.586-1.414L19.559 32 1.855 14.295a1.994 1.994 0 0 1-.586-1.414c0-.512.195-1.024.586-1.415l9.611-9.611c.391-.391.903-.586 1.415-.586s1.023.195 1.414.586L32 19.559 49.705 1.855c.39-.391.902-.586 1.414-.586Z"
+        />
+      )}
     </svg>
   );
 };
+
+export type { XIconVariant };

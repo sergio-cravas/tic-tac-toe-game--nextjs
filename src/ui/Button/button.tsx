@@ -12,14 +12,14 @@ interface ButtonProps {
    * The variant of the button. By default is Primary
    */
   variant?: ButtonVariant;
-   /**
+  /**
    * The background color of the button. By default is Yellow
    */
   color?: ButtonColor;
   /**
-   * Button contents
+   * Button content
    */
-  label: string;
+  label: string | React.ReactNode;
   /**
    * Optional click handler
    */
@@ -29,16 +29,13 @@ interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({
-  variant = 'primary',
-  color = 'yellow',
-  label,
-  ...props
-}: ButtonProps) => {
-
-
+export const Button = ({ variant = 'primary', color = 'yellow', label, ...props }: ButtonProps) => {
   return (
-    <button type="button" className={[styles.button, styles[`button--${variant}`], styles[`button--${color}`]].join(' ')} {...props}>
+    <button
+      type="button"
+      className={[styles.button, styles[`button--${variant}`], styles[`button--${color}`]].join(' ')}
+      {...props}
+    >
       {label}
     </button>
   );

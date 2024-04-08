@@ -1,5 +1,5 @@
-import { OIcon } from "../OIcon/oIcon";
-import { XIcon } from "../XIcon/xIcon";
+import { OIcon } from '../OIcon/oIcon';
+import { XIcon } from '../XIcon/xIcon';
 
 interface LogoProps {
   /**
@@ -9,11 +9,10 @@ interface LogoProps {
 }
 
 export const Logo = ({ size = 40 }: LogoProps) => {
-    return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: size / 4 }}>
-        <XIcon size={size} />
-        <OIcon size={size} />
-      </div>
-    );
-  };
-  
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: size / 4 }}>
+      <XIcon size={size} />
+      <OIcon size={size} />
+    </div>
+  );
+};
