@@ -1,6 +1,5 @@
 {
   "workbench.iconTheme": "material-icon-theme",
-  "prettier.printWidth": 128,
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
   "material-icon-theme.folders.associations": {

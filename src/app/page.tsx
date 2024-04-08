@@ -1,67 +1,22 @@
 'use client';
 
-import { useCallback, useState } from 'react';
-
-import { Logo } from '@/ui/Logo/logo';
-import { Button } from '@/ui/Button/button';
-import { TurnBadge } from './_shared/components/TurnBadge/turnBadge.component';
-import { ScoreBadge } from './_shared/components/ScoreBadge/scoreBadge.component';
+import GameContextProvider from './_shared/context/gameContext';
+import { Game } from './_shared/components/views/Game/game.component';
+import { WinBanner } from './_shared/components/views/WinBanner/winBanner.component';
 
 import styles from './page.module.scss';
-import colors from '@/theme/colors.module.scss';
-import { Tile } from './_shared/components/Tile/tile.component';
-import { RestartIcon } from '@/ui/RestartIcon/restartIcon.component';
 
 export default function Home() {
-  const [currentPlayer, setCurrentPlayer] = useState<'x' | 'o'>('x');
-
-  const handleOnTileClick = useCallback(() => {
-    setCurrentPlayer((prev) => (prev === 'o' ? 'x' : 'o'));
-  }, []);
-
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        <div className={styles.head}>
-          <div className={styles['head__logo']}>
-            <Logo />
-          </div>
+    <GameContextProvider>
+      <main className={styles.main}>
+        <Game />
 
-          <TurnBadge currentPlayer={currentPlayer} />
-
-          <div className={styles['head__restart-button']}>
-            <Button variant="icon-only" color="gray" label={<RestartIcon />} />
-          </div>
-        </div>
-
-        <div className={styles.field}>
-          <div className={styles['field-row']}>
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          </div>
-
-          <div className={styles['field-row']}>
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          </div>
-
-          <div className={styles['field-row']}>
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-            <Tile currentPlayer={currentPlayer} onClick={handleOnTileClick} />
-          </div>
-        </div>
-
-        <div className={styles.score}>
-          <ScoreBadge title="O (CPU)" points={14} backgroundColor={colors.lightBlue} />
-
-          <ScoreBadge title="TIES" points={32} backgroundColor={colors.silver} />
-
-          <ScoreBadge title="X (YOU)" points={11} backgroundColor={colors.lightYellow} />
-        </div>
-      </div>
-    </main>
+        <WinBanner />
+      </main>
+    </GameContextProvider>
   );
 }
+
+
+

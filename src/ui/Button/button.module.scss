@@ -13,17 +13,17 @@
   cursor: pointer;
 
   &--primary {
-    padding: 15px 0 17px 0;
+    padding: 15px 16px 17px 16px;
     border-radius: 15px;
   }
 
   &--secondary {
-    padding: 1rem 0;
+    padding: 1rem;
     border-radius: 10px;
   }
 
   &--icon-only {
-    padding: 13px 0 15px 0;
+    padding: 13px 16px 15px 16px;
     border-radius: 10px;
 
     width: 52px;
