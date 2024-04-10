@@ -5,8 +5,8 @@ import { Text } from "@/ui/Text/text";
 import { OIcon } from "@/ui/OIcon/oIcon";
 import { XIcon } from "@/ui/XIcon/xIcon";
 import { Button } from "@/ui/Button/button";
-import { GameContextProps, GameContext } from "@/app/game/_shared/context/gameContext";
-import { ScoreContext, ScoreContextProps } from "@/app/game/_shared/context/scoreContext";
+import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
+import { ScoreContext, ScoreContextProps } from "@/app/play/_shared/context/scoreContext";
 
 import styles from "./winBanner.module.scss";
 

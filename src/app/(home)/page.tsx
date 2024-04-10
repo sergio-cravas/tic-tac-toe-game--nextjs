@@ -19,7 +19,7 @@ export default function Home() {
 
   const handleOnStartNewGame = useCallback(
     (mode: "pvp" | "pve") => {
-      router.push(`/game?pj_1=${playerSelected}&mode=${mode}`);
+      router.push(`/play?pj_1=${playerSelected}&mode=${mode}`);
     },
     [router, playerSelected],
   );

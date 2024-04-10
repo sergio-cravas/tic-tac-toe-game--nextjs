@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 
 import { OIcon } from "@/ui/OIcon/oIcon";
 import { XIcon } from "@/ui/XIcon/xIcon";
-import { GameContext, GameContextProps } from "@/app/game/_shared/context/gameContext";
+import { GameContext, GameContextProps } from "@/app/play/_shared/context/gameContext";
 
 import styles from "./tile.module.scss";
 import colors from "@/theme/colors.module.scss";

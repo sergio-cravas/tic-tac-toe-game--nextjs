@@ -6,8 +6,8 @@ import { Tile } from "../Tile/tile.component";
 import { RestartIcon } from "@/ui/RestartIcon/restartIcon.component";
 import { TurnBadge } from "../TurnBadge/turnBadge.component";
 import { ScoreBadge } from "../ScoreBadge/scoreBadge.component";
-import { GameContextProps, GameContext } from "@/app/game/_shared/context/gameContext";
-import { ScoreContext, ScoreContextProps } from "@/app/game/_shared/context/scoreContext";
+import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
+import { ScoreContext, ScoreContextProps } from "@/app/play/_shared/context/scoreContext";
 
 import styles from "./tileGrid.module.scss";
 import colors from "@/theme/colors.module.scss";
