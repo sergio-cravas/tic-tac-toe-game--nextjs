@@ -8,6 +8,7 @@ import { Logo } from "@/ui/Logo/logo";
 import { OIcon } from "@/ui/OIcon/oIcon";
 import { XIcon } from "@/ui/XIcon/xIcon";
 import { Button } from "@/ui/Button/button";
+import { classNames } from "@/functions/classNames";
 
 import styles from "./page.module.scss";
 import colors from "@/theme/colors.module.scss";
@@ -39,20 +40,20 @@ export default function Home() {
 
           <div className={styles["player-selection__switch"]}>
             <div
-              className={[
+              className={classNames([
                 styles["player-selection__switch__button"],
                 playerSelected === "x" && styles["player-selection__switch__button--active"],
-              ].join(" ")}
+              ])}
               onClick={() => setPlayedSelected("x")}
             >
               <XIcon color={playerSelected === "x" ? colors.darkNavy : colors.silver} />
             </div>
 
             <div
-              className={[
+              className={classNames([
                 styles["player-selection__switch__button"],
                 playerSelected === "o" && styles["player-selection__switch__button--active"],
-              ].join(" ")}
+              ])}
               onClick={() => setPlayedSelected("o")}
             >
               <OIcon color={playerSelected === "o" ? colors.darkNavy : colors.silver} />

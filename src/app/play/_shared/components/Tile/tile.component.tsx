@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useMemo, useState, useContext } from "react";
 
 import { OIcon } from "@/ui/OIcon/oIcon";
 import { XIcon } from "@/ui/XIcon/xIcon";
+import { classNames } from "@/functions/classNames";
 import { GameContext, GameContextProps } from "@/app/play/_shared/context/gameContext";
 
 import styles from "./tile.module.scss";
@@ -12,20 +13,18 @@ interface TileProps {
    * The size of the icon in pixels. By default is 40.
    */
   size?: number;
-
-  /** Current player of the game */
+  /**
+   * Current player of the game
+   */
   currentPlayer: "x" | "o";
-
   /**
    * Adds the icon of the player who selected this tile.
    */
   isSelectedBy?: "x" | "o";
-
   /**
    * Sets a winning state for the tile
    */
   isWinner?: boolean;
-
   /**
    * Click handler
    */
@@ -33,19 +32,21 @@ interface TileProps {
 }
 
 const Tile = ({ isSelectedBy, isWinner, onClick }: TileProps) => {
-  const { currentPlayer } = useContext<GameContextProps>(GameContext);
+  const { winner, currentPlayer } = useContext<GameContextProps>(GameContext);
 
-  const [isHover, setIsHover] = useState<boolean>();
+  const [isHover, setIsHover] = useState<boolean>(false);
+
+  const canShowHover = useMemo(() => !Boolean(winner) && !Boolean(isSelectedBy) && isHover, [isHover, isSelectedBy, winner]);
 
   return (
     <div
       onClick={onClick}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      className={[styles.tile, isWinner && isSelectedBy && styles[`tile--is-winner-${isSelectedBy}`]].join(" ")}
+      className={classNames([styles.tile, Boolean(isWinner && isSelectedBy) && styles[`tile--is-winner-${isSelectedBy}`]])}
     >
-      {!isSelectedBy && isHover && currentPlayer === "o" && <OIcon size={64} variant="outline" />}
-      {!isSelectedBy && isHover && currentPlayer === "x" && <XIcon size={64} variant="outline" />}
+      {canShowHover && currentPlayer === "o" && <OIcon size={64} variant="outline" />}
+      {canShowHover && currentPlayer === "x" && <XIcon size={64} variant="outline" />}
 
       {isSelectedBy === "o" && <OIcon size={64} color={isWinner ? colors.semiDarkNavy : undefined} />}
       {isSelectedBy === "x" && <XIcon size={64} color={isWinner ? colors.semiDarkNavy : undefined} />}

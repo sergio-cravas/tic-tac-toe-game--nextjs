@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { classNames } from "@/functions/classNames";
+
 import styles from "./button.module.scss";
 
 type ButtonVariant = "primary" | "secondary" | "icon-only";
@@ -38,12 +40,12 @@ export const Button = ({ variant = "primary", color = "yellow", label, isDisable
     <button
       type="button"
       disabled={isDisabled}
-      className={[
+      className={classNames([
         styles.button,
         styles[`button--${variant}`],
         styles[`button--${color}`],
         isDisabled && styles[`button--disabled`],
-      ].join(" ")}
+      ])}
       {...props}
     >
       {label}
