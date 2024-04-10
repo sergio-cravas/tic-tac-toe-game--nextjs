@@ -1,0 +1,10 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "prettier.singleQuote": true,
+  "editor.formatOnSave": true,
+  "material-icon-theme.folders.associations": {
+    "_views": "views",
+    "_shared": "shared",
+    "_components": "components"
+  }
+}

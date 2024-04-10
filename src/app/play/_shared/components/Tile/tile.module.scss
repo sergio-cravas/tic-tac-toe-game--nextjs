@@ -1,0 +1,24 @@
+@import '@/theme/colors.module.scss';
+
+.tile {
+  width: 140px;
+  height: 140px;
+  aspect-ratio: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: $semi-dark-navy;
+
+  box-shadow: inset 0px -8px 0px #10212a;
+
+  &--is-winner-x {
+    background-color: $light-blue;
+  }
+
+  &--is-winner-o {
+    background-color: $light-yellow;
+  }
+}

@@ -1,0 +1,50 @@
+@import '@/theme/colors.module.scss';
+
+.text {
+  &--heading {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &--large {
+    font-size: 2.5rem;
+    letter-spacing: 2.5px;
+  }
+
+  &--medium {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+  }
+
+  &--small {
+    font-size: 1.25rem;
+    letter-spacing: 1.25px;
+  }
+
+  &--extra-small {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  &--body {
+    font-weight: 500;
+    font-size: 0.875rem;
+    letter-spacing: 0.88px;
+  }
+
+  &--light {
+    color: $silver;
+  }
+
+  &--dark {
+    color: $dark-navy;
+  }
+
+  &--blue {
+    color: $light-blue;
+  }
+
+  &--yellow {
+    color: $light-yellow;
+  }
+}

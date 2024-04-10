@@ -1,0 +1,114 @@
+@import '@/theme/colors.module.scss';
+
+.main {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 6rem;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+}
+
+.head {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  &__logo, &__restart-button {
+    flex: 1;
+    display: flex;
+  }
+
+  &__logo {
+    justify-content: flex-start;
+  }
+
+  &__restart-button {
+    justify-content: flex-end;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  &-row {
+    display: flex;
+    gap: 20px;
+  }
+}
+
+.score {
+  display: flex;
+  gap: 20px;
+}
+
+.win-banner {
+  position: absolute;
+
+  width: 100vw;
+  height: 100vh;
+
+  &__background {
+    width: 100vw;
+    height: 100vh;
+
+    background-color: #00000080;
+  }
+
+  &__banner {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 45px;
+    background-color: $semi-dark-navy;
+
+    &__title {
+      margin-bottom: 1rem;
+    }
+
+    &__winner {
+      margin-bottom: 1.5rem;
+
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    &__buttons {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 1rem;
+    }
+  }
+}

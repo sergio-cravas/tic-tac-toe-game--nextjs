@@ -1,0 +1,24 @@
+@import '@/theme/colors.module.scss';
+
+.score-badge {
+   width: 140px;
+   padding: 14px;
+
+   display: flex;
+   flex-direction: column;
+ 
+   align-items: center;
+   border-radius: 15px;   
+
+   &--player-x {
+      background-color: $light-blue;
+   }
+
+   &--player-o {
+      background-color: $light-yellow;
+   }
+
+   &--player-tie {
+      background-color: $silver;
+   }
+}

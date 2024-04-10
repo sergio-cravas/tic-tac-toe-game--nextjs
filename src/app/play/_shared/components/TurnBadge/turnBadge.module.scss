@@ -1,0 +1,16 @@
+@import '@/theme/colors.module.scss';
+
+.turn-badge {
+   display: flex;
+   width: 140px;
+
+   gap: 14px;
+   padding: 13px 0 19px 0;
+ 
+   align-items: center;
+   justify-content: center;
+   border-radius: 15px;
+   background-color: $semi-dark-navy;
+ 
+   box-shadow: inset 0px -8px 0px #10212a;
+}

@@ -1,0 +1,83 @@
+@import '@/theme/colors.module.scss';
+
+.button {
+  display: inline-block;
+
+  border: 0;
+
+  color: $dark-navy;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  &--primary {
+    padding: 15px 16px 17px 16px;
+    border-radius: 15px;
+  }
+
+  &--secondary {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  &--icon-only {
+    padding: 13px 16px 15px 16px;
+    border-radius: 10px;
+
+    width: 52px;
+    height: 52px;
+  }
+
+  &--yellow {
+    background-color: $light-yellow;
+    box-shadow: inset 0px -8px 0px #CC8B13;
+  
+    &:hover {
+      background-color: $light-yellow--hover;
+    }
+
+    &:active {
+      background-color: darken($color: $light-yellow, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #CC8B13, $amount: 10%);
+    }
+  }
+
+  &--blue {
+    background-color: $light-blue;
+    box-shadow: inset 0px -8px 0px #118C87;
+  
+    &:hover {
+      background-color: $light-blue--hover;
+    }
+
+    &:active {
+      background-color: darken($color: $light-blue, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #118C87, $amount: 10%);
+    }
+  }
+
+  &--gray {
+    background-color: $silver;
+    box-shadow: inset 0px -8px 0px #6B8997;
+  
+    &:hover {
+      background-color: $silver--hover;
+    }
+
+    &:active {
+      background-color: darken($color: $silver, $amount: 10%);
+      box-shadow: inset 0px -8px 0px darken($color: #6B8997, $amount: 10%);
+    }
+  }
+
+  &--disabled {
+    color: darken($color: $silver, $amount: 20%);
+
+    background-color: $silver;
+    box-shadow: inset 0px -8px 0px #6B8997;
+
+    pointer-events: none;
+  }
+}
