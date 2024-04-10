@@ -71,4 +71,13 @@
       box-shadow: inset 0px -8px 0px darken($color: #6B8997, $amount: 10%);
     }
   }
+
+  &--disabled {
+    color: darken($color: $silver, $amount: 20%);
+
+    background-color: $silver;
+    box-shadow: inset 0px -8px 0px #6B8997;
+
+    pointer-events: none;
+  }
 }

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import styles from './button.module.scss';
+import styles from "./button.module.scss";
 
-type ButtonVariant = 'primary' | 'secondary' | 'icon-only';
-type ButtonColor = 'yellow' | 'blue' | 'gray';
+type ButtonVariant = "primary" | "secondary" | "icon-only";
+type ButtonColor = "yellow" | "blue" | "gray";
 
 interface ButtonProps {
   /**
@@ -21,6 +21,10 @@ interface ButtonProps {
    */
   label: string | React.ReactNode;
   /**
+   * Sets the button with disabled state. By default is false.
+   */
+  isDisabled?: boolean;
+  /**
    * Optional click handler
    */
   onClick?: () => void;
@@ -29,11 +33,17 @@ interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ variant = 'primary', color = 'yellow', label, ...props }: ButtonProps) => {
+export const Button = ({ variant = "primary", color = "yellow", label, isDisabled = false, ...props }: ButtonProps) => {
   return (
     <button
       type="button"
-      className={[styles.button, styles[`button--${variant}`], styles[`button--${color}`]].join(' ')}
+      disabled={isDisabled}
+      className={[
+        styles.button,
+        styles[`button--${variant}`],
+        styles[`button--${color}`],
+        isDisabled && styles[`button--disabled`],
+      ].join(" ")}
       {...props}
     >
       {label}
