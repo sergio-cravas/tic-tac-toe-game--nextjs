@@ -2,20 +2,20 @@ import { useContext } from "react";
 
 import { Logo } from "@/ui/Logo/logo";
 import { Button } from "@/ui/Button/button";
-import { Tile } from "../../atoms/Tile/tile.component";
+import { Tile } from "../Tile/tile.component";
 import { RestartIcon } from "@/ui/RestartIcon/restartIcon.component";
-import { TurnBadge } from "../../atoms/TurnBadge/turnBadge.component";
-import { ScoreBadge } from "../../atoms/ScoreBadge/scoreBadge.component";
-import { GameContextProps, GameContext } from "@/app/_shared/context/gameContext";
-import { ScoreContext, ScoreContextProps } from "@/app/_shared/context/scoreContext";
+import { TurnBadge } from "../TurnBadge/turnBadge.component";
+import { ScoreBadge } from "../ScoreBadge/scoreBadge.component";
+import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
+import { ScoreContext, ScoreContextProps } from "@/app/play/_shared/context/scoreContext";
 
-import styles from "./game.module.scss";
+import styles from "./tileGrid.module.scss";
 import colors from "@/theme/colors.module.scss";
 
 const GRID_ROWS = 3;
 const GRID_COLUMNS = 3;
 
-export const Game = () => {
+export const TileGrid = () => {
   const { tiles, winningTiles, currentPlayer, onPlay, onReset } = useContext<GameContextProps>(GameContext);
   const { winsByX, winsByO, draws } = useContext<ScoreContextProps>(ScoreContext);
 
