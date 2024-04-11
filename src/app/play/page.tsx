@@ -38,8 +38,8 @@ export default function Home() {
   );
 
   return (
-    <main className={styles.main}>
-      <Suspense>
+    <Suspense>
+      <main className={styles.main}>
         <div className={styles.container}>
           <div className={styles.head}>
             <div className={styles["head__logo"]}>
@@ -77,9 +77,9 @@ export default function Home() {
             <ScoreBadge title="O (P2)" points={winsByO} backgroundColor={colors.lightYellow} />
           </div>
         </div>
-      </Suspense>
 
-      <WinBanner />
-    </main>
+        <WinBanner />
+      </main>
+    </Suspense>
   );
 }
