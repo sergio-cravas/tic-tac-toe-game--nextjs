@@ -1,10 +1,12 @@
+"use client";
+
 import { Dispatch, SetStateAction, createContext, useCallback, useContext, useState } from "react";
 import { ScoreContext, ScoreContextProps } from "./scoreContext";
 
 type PlayerTile = "x" | "o";
 
 interface GameContextProps {
-  winner?: PlayerTile | 'draw';
+  winner?: PlayerTile | "draw";
   currentPlayer: PlayerTile;
   tiles: Record<string, PlayerTile | undefined>;
   winningTiles: string[];
@@ -29,9 +31,9 @@ const GameContext = createContext<GameContextProps>({
   winningTiles: [],
   currentPlayer: "x",
   tiles: INITIAL_TILES,
-  onPlay: () => { },
-  onReset: () => { },
-  setWinningTiles: () => { },
+  onPlay: () => {},
+  onReset: () => {},
+  setWinningTiles: () => {},
 });
 
 type GameContextProviderProps = {
@@ -53,9 +55,9 @@ function GameContextProvider({ children }: GameContextProviderProps) {
       const { winner, winningTiles: _winningTiles } = checkWhoIsWinner(newTiles, currentPlayer);
 
       if (winner) dispatchWinner(winner);
-      
+
       setWinner(winner);
-      setWinningTiles(_winningTiles)
+      setWinningTiles(_winningTiles);
       setTiles(newTiles);
       setCurrentPlayer((prev) => (prev === "o" ? "x" : "o"));
     },
@@ -70,7 +72,17 @@ function GameContextProvider({ children }: GameContextProviderProps) {
   }, []);
 
   return (
-    <GameContext.Provider value={{ tiles, winner, currentPlayer, winningTiles, onPlay: handleOnTileClick, onReset: handleOnResetGame, setWinningTiles }}>
+    <GameContext.Provider
+      value={{
+        tiles,
+        winner,
+        currentPlayer,
+        winningTiles,
+        onPlay: handleOnTileClick,
+        onReset: handleOnResetGame,
+        setWinningTiles,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );
@@ -80,12 +92,19 @@ export default GameContextProvider;
 export { GameContext };
 export type { GameContextProps };
 
-const checkWhoIsWinner = (tiles: Record<string, PlayerTile | undefined>, player: PlayerTile): { winner: PlayerTile | "draw" | undefined, winningTiles: string[] } => {
+const checkWhoIsWinner = (
+  tiles: Record<string, PlayerTile | undefined>,
+  player: PlayerTile,
+): { winner: PlayerTile | "draw" | undefined; winningTiles: string[] } => {
   let winningTiles: string[] = [];
   let isPlayerWinner: boolean = false;
 
   for (let index = 0; index < 3; index++) {
-    if ([tiles[`row${index}-col${0}`], tiles[`row${index}-col${1}`], tiles[`row${index}-col${2}`]].every((item) => item && item === player)) {
+    if (
+      [tiles[`row${index}-col${0}`], tiles[`row${index}-col${1}`], tiles[`row${index}-col${2}`]].every(
+        (item) => item && item === player,
+      )
+    ) {
       isPlayerWinner = true;
       winningTiles = [`row${index}-col${0}`, `row${index}-col${1}`, `row${index}-col${2}`];
       break;
@@ -94,7 +113,11 @@ const checkWhoIsWinner = (tiles: Record<string, PlayerTile | undefined>, player:
 
   if (!isPlayerWinner) {
     for (let index = 0; index < 3; index++) {
-      if ([tiles[`row${0}-col${index}`], tiles[`row${1}-col${index}`], tiles[`row${2}-col${index}`]].every((item) => item && item === player)) {
+      if (
+        [tiles[`row${0}-col${index}`], tiles[`row${1}-col${index}`], tiles[`row${2}-col${index}`]].every(
+          (item) => item && item === player,
+        )
+      ) {
         isPlayerWinner = true;
         winningTiles = [`row${0}-col${index}`, `row${1}-col${index}`, `row${2}-col${index}`];
         break;
@@ -103,18 +126,22 @@ const checkWhoIsWinner = (tiles: Record<string, PlayerTile | undefined>, player:
   }
 
   if (!isPlayerWinner) {
-    if ([tiles[`row${0}-col${0}`], tiles[`row${1}-col${1}`], tiles[`row${2}-col${2}`]].every((item) => item && item === player)) {
+    if (
+      [tiles[`row${0}-col${0}`], tiles[`row${1}-col${1}`], tiles[`row${2}-col${2}`]].every((item) => item && item === player)
+    ) {
       isPlayerWinner = true;
       winningTiles = [`row${0}-col${0}`, `row${1}-col${1}`, `row${2}-col${2}`];
     }
 
-    if ([tiles[`row${2}-col${0}`], tiles[`row${1}-col${1}`], tiles[`row${0}-col${2}`]].every((item) => item && item === player)) {
+    if (
+      [tiles[`row${2}-col${0}`], tiles[`row${1}-col${1}`], tiles[`row${0}-col${2}`]].every((item) => item && item === player)
+    ) {
       isPlayerWinner = true;
       winningTiles = [`row${2}-col${0}`, `row${1}-col${1}`, `row${0}-col${2}`];
     }
   }
 
-  if (!isPlayerWinner && Object.values(tiles).every(item => item !== undefined)) return { winner: 'draw', winningTiles };
+  if (!isPlayerWinner && Object.values(tiles).every((item) => item !== undefined)) return { winner: "draw", winningTiles };
   else if (isPlayerWinner) return { winner: player, winningTiles };
   else return { winner: undefined, winningTiles };
 };
