@@ -11,8 +11,15 @@
 
   border-radius: 10px;
   background-color: $semi-dark-navy;
-
   box-shadow: inset 0px -8px 0px #10212a;
+
+  cursor: pointer;
+  transition: 0.125s all ease;
+
+  &:hover {
+    background-color: lighten($color: $semi-dark-navy, $amount: 2%);
+    box-shadow: inset 0px -8px 0px lighten($color: #10212a, $amount: 2%);
+  }
 
   &--is-winner-x {
     background-color: $light-blue;
