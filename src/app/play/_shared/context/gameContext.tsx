@@ -4,18 +4,21 @@ import { Dispatch, SetStateAction, createContext, useCallback, useContext, useSt
 import { ScoreContext, ScoreContextProps } from "./scoreContext";
 
 type PlayerTile = "x" | "o";
+type Winner = "x" | "o" | "draw" | undefined;
+type Tiles = Record<string, PlayerTile | undefined>;
 
 interface GameContextProps {
-  winner?: PlayerTile | "draw";
-  currentPlayer: PlayerTile;
-  tiles: Record<string, PlayerTile | undefined>;
+  tiles: Tiles;
+  winner?: Winner;
   winningTiles: string[];
-  onPlay: (row: number, column: number) => void;
+  currentPlayer: PlayerTile;
+  onPlay: (row: number, column: number, player: PlayerTile, tiles: Tiles) => Tiles;
   onReset: () => void;
+  onCPUPlay: (cpu: PlayerTile, tiles: Tiles) => void;
   setWinningTiles: Dispatch<SetStateAction<string[]>>;
 }
 
-const INITIAL_TILES: Record<string, PlayerTile | undefined> = {
+const INITIAL_TILES: Tiles = {
   "row0-col0": undefined,
   "row0-col1": undefined,
   "row0-col2": undefined,
@@ -31,8 +34,9 @@ const GameContext = createContext<GameContextProps>({
   winningTiles: [],
   currentPlayer: "x",
   tiles: INITIAL_TILES,
-  onPlay: () => {},
+  onPlay: () => INITIAL_TILES,
   onReset: () => {},
+  onCPUPlay: () => {},
   setWinningTiles: () => {},
 });
 
@@ -43,25 +47,36 @@ type GameContextProviderProps = {
 function GameContextProvider({ children }: GameContextProviderProps) {
   const { dispatchWinner } = useContext<ScoreContextProps>(ScoreContext);
 
-  const [winner, setWinner] = useState<any>();
+  const [winner, setWinner] = useState<Winner>();
+  const [tiles, setTiles] = useState<Tiles>(INITIAL_TILES);
   const [winningTiles, setWinningTiles] = useState<string[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>("x");
-  const [tiles, setTiles] = useState<Record<string, PlayerTile | undefined>>(INITIAL_TILES);
 
   const handleOnTileClick = useCallback(
-    (row: number, column: number) => {
-      let newTiles = { ...tiles, [`row${row}-col${column}`]: currentPlayer };
+    (row: number, column: number, player: PlayerTile, tiles: Tiles) => {
+      const _tiles = { ...tiles, [`row${row}-col${column}`]: player };
 
-      const { winner, winningTiles: _winningTiles } = checkWhoIsWinner(newTiles, currentPlayer);
+      const { winner: _winner, winningTiles: _winningTiles } = checkWhoIsWinner(_tiles, player);
 
-      if (winner) dispatchWinner(winner);
+      if (_winner) dispatchWinner(_winner);
 
-      setWinner(winner);
+      setTiles(_tiles);
+      setWinner(_winner);
       setWinningTiles(_winningTiles);
-      setTiles(newTiles);
-      setCurrentPlayer((prev) => (prev === "o" ? "x" : "o"));
+      setCurrentPlayer(player === "o" ? "x" : "o");
+
+      return _tiles;
     },
-    [tiles, currentPlayer, dispatchWinner],
+    [dispatchWinner],
+  );
+
+  const handleOnCPUClick = useCallback(
+    async (cpu: PlayerTile, tiles: Tiles) => {
+      const { row, column } = getMoveFromCPU(tiles, cpu);
+
+      handleOnTileClick(row, column, cpu, tiles);
+    },
+    [handleOnTileClick],
   );
 
   const handleOnResetGame = useCallback(() => {
@@ -80,6 +95,7 @@ function GameContextProvider({ children }: GameContextProviderProps) {
         winningTiles,
         onPlay: handleOnTileClick,
         onReset: handleOnResetGame,
+        onCPUPlay: handleOnCPUClick,
         setWinningTiles,
       }}
     >
@@ -145,3 +161,24 @@ const checkWhoIsWinner = (
   else if (isPlayerWinner) return { winner: player, winningTiles };
   else return { winner: undefined, winningTiles };
 };
+
+const getMoveFromCPU = (tiles: Tiles, cpu: PlayerTile): { row: number; column: number } => {
+  const emptyTiles: string[] = [];
+
+  for (const tile of Object.entries(tiles)) {
+    if (tile[1] === undefined) emptyTiles.push(tile[0]);
+  }
+
+  const randomIndex = Math.floor(Math.random() * emptyTiles.length);
+
+  return parseCoordinate(emptyTiles[randomIndex]);
+};
+
+function parseCoordinate(coords: string) {
+  const parts = coords.split("-");
+
+  const row = parseInt(parts[0].substring(3));
+  const column = parseInt(parts[1].substring(3));
+
+  return { row, column };
+}
