@@ -71,10 +71,12 @@ function GameContextProvider({ children }: GameContextProviderProps) {
   );
 
   const handleOnCPUClick = useCallback(
-    async (cpu: PlayerTile, tiles: Tiles) => {
-      const { row, column } = getMoveFromCPU(tiles, cpu);
+    (cpu: PlayerTile, tiles: Tiles) => {
+      const coords = getMoveFromCPU(tiles, cpu);
 
-      handleOnTileClick(row, column, cpu, tiles);
+      if (coords) {
+        handleOnTileClick(coords.row, coords.column, cpu, tiles);
+      }
     },
     [handleOnTileClick],
   );
@@ -162,12 +164,14 @@ const checkWhoIsWinner = (
   else return { winner: undefined, winningTiles };
 };
 
-const getMoveFromCPU = (tiles: Tiles, cpu: PlayerTile): { row: number; column: number } => {
+const getMoveFromCPU = (tiles: Tiles, cpu: PlayerTile): { row: number; column: number } | undefined => {
   const emptyTiles: string[] = [];
 
   for (const tile of Object.entries(tiles)) {
     if (tile[1] === undefined) emptyTiles.push(tile[0]);
   }
+
+  if (emptyTiles.length === 0) return undefined;
 
   const randomIndex = Math.floor(Math.random() * emptyTiles.length);
 

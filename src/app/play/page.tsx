@@ -30,7 +30,7 @@ export default function Home() {
     (row: number, column: number) => {
       const newTiles = onPlay(row, column, currentPlayer, tiles);
 
-      if (!winner && mode === "pvp") {
+      if (!winner && mode === "pve") {
         setTimeout(() => onCPUPlay(player1 === "x" ? "o" : "x", newTiles), 500);
       }
     },

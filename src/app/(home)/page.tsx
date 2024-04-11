@@ -64,7 +64,7 @@ export default function Home() {
         </div>
 
         <div className={styles["mode-selection"]}>
-          <Button isDisabled label="New game (vs cpu)" color="yellow" onClick={() => handleOnStartNewGame("pve")} />
+          <Button label="New game (vs cpu)" color="yellow" onClick={() => handleOnStartNewGame("pve")} />
           <Button label="New game (vs player)" color="blue" onClick={() => handleOnStartNewGame("pvp")} />
         </div>
       </div>
