@@ -3,11 +3,7 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Text } from "@/ui/Text/text";
-import { Logo } from "@/ui";
-import { OIcon } from "@/ui/OIcon/oIcon";
-import { XIcon } from "@/ui/XIcon/xIcon";
-import { Button } from "@/ui";
+import { Logo, Text, Button, OIcon, XIcon } from "@/ui";
 import { classNames } from "@/functions/classNames";
 
 import styles from "./page.module.scss";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Logo, Button, RestartIcon } from "@/ui";
@@ -38,48 +38,46 @@ export default function Home() {
   );
 
   return (
-    <Suspense>
-      <main className={styles.main}>
-        <div className={styles.container}>
-          <div className={styles.head}>
-            <div className={styles["head__logo"]}>
-              <Logo />
-            </div>
-
-            <TurnBadge currentPlayer={currentPlayer} />
-
-            <div className={styles["head__restart-button"]}>
-              <Button variant="icon-only" color="gray" label={<RestartIcon />} onClick={onReset} />
-            </div>
+    <main className={styles.main}>
+      <div className={styles.container}>
+        <div className={styles.head}>
+          <div className={styles["head__logo"]}>
+            <Logo />
           </div>
 
-          <div className={styles.field}>
-            {[...Array(GRID_ROWS).keys()].map((rowIndex) => (
-              <div key={`row-${rowIndex}`} className={styles["field-row"]}>
-                {[...Array(GRID_COLUMNS).keys()].map((colIndex) => (
-                  <Tile
-                    key={`tile-${rowIndex}-${colIndex}`}
-                    isSelectedBy={tiles[`row${rowIndex}-col${colIndex}`]}
-                    isWinner={winningTiles.includes(`row${rowIndex}-col${colIndex}`)}
-                    currentPlayer={currentPlayer}
-                    onClick={() => handleOnTileClick(rowIndex, colIndex)}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
+          <TurnBadge currentPlayer={currentPlayer} />
 
-          <div className={styles.score}>
-            <ScoreBadge title="X (P1)" points={winsByX} backgroundColor={colors.lightBlue} />
-
-            <ScoreBadge title="TIES" points={draws} backgroundColor={colors.silver} />
-
-            <ScoreBadge title="O (P2)" points={winsByO} backgroundColor={colors.lightYellow} />
+          <div className={styles["head__restart-button"]}>
+            <Button variant="icon-only" color="gray" label={<RestartIcon />} onClick={onReset} />
           </div>
         </div>
 
-        <WinBanner />
-      </main>
-    </Suspense>
+        <div className={styles.field}>
+          {[...Array(GRID_ROWS).keys()].map((rowIndex) => (
+            <div key={`row-${rowIndex}`} className={styles["field-row"]}>
+              {[...Array(GRID_COLUMNS).keys()].map((colIndex) => (
+                <Tile
+                  key={`tile-${rowIndex}-${colIndex}`}
+                  isSelectedBy={tiles[`row${rowIndex}-col${colIndex}`]}
+                  isWinner={winningTiles.includes(`row${rowIndex}-col${colIndex}`)}
+                  currentPlayer={currentPlayer}
+                  onClick={() => handleOnTileClick(rowIndex, colIndex)}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.score}>
+          <ScoreBadge title="X (P1)" points={winsByX} backgroundColor={colors.lightBlue} />
+
+          <ScoreBadge title="TIES" points={draws} backgroundColor={colors.silver} />
+
+          <ScoreBadge title="O (P2)" points={winsByO} backgroundColor={colors.lightYellow} />
+        </div>
+      </div>
+
+      <WinBanner />
+    </main>
   );
 }

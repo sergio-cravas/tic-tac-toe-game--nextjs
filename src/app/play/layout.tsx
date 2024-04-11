@@ -5,6 +5,7 @@ import GameContextProvider from "./_shared/context/gameContext";
 import ScoreContextProvider from "./_shared/context/scoreContext";
 
 import "@/theme/globals.scss";
+import { Suspense } from "react";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={outfit.className}>
         <ScoreContextProvider>
-          <GameContextProvider>{children}</GameContextProvider>
+          <GameContextProvider>
+            <Suspense>{children}</Suspense>
+          </GameContextProvider>
         </ScoreContextProvider>
       </body>
     </html>
