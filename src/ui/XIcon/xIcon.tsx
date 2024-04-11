@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import colors from '@/theme/colors.module.scss';
+import colors from "@/theme/colors.module.scss";
 
-type XIconVariant = 'solid' | 'outline';
+type XIconVariant = "solid" | "outline";
 
 interface XIconProps {
   /**
@@ -19,15 +19,19 @@ interface XIconProps {
    * Optional color of the icon. By default is light blue.
    */
   color?: string;
+  /**
+   * Classname of the component
+   */
+  className?: string;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const XIcon = ({ size = 40, variant = 'solid', color = colors.lightBlue }: XIconProps) => {
+export const XIcon = ({ size = 40, variant = "solid", color = colors.lightBlue, className }: XIconProps) => {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {variant === 'solid' && (
+    <svg width={size} height={size} className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {variant === "solid" && (
         <path
           fill={color}
           fillRule="evenodd"
@@ -35,7 +39,7 @@ export const XIcon = ({ size = 40, variant = 'solid', color = colors.lightBlue }
         />
       )}
 
-      {variant === 'outline' && (
+      {variant === "outline" && (
         <path
           fill="none"
           stroke={color}

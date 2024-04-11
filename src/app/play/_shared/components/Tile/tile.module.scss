@@ -40,3 +40,13 @@
     background-color: $light-yellow;
   }
 }
+
+.icon {
+  width: 52px !important;
+  height: 52px !important;
+
+  @media (min-width: $tablet) {
+    width: 64px !important;
+    height: 64px !important;
+  }
+}

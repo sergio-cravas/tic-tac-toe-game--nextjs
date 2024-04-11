@@ -7,6 +7,7 @@ import { GameContext, GameContextProps } from "@/app/play/_shared/context/gameCo
 
 import styles from "./tile.module.scss";
 import colors from "@/theme/colors.module.scss";
+import breakpoints from "@/theme/breakpoints.module.scss";
 
 interface TileProps {
   /**
@@ -45,11 +46,11 @@ const Tile = ({ isSelectedBy, isWinner, onClick }: TileProps) => {
       onMouseLeave={() => setIsHover(false)}
       className={classNames([styles.tile, Boolean(isWinner && isSelectedBy) && styles[`tile--is-winner-${isSelectedBy}`]])}
     >
-      {canShowHover && currentPlayer === "o" && <OIcon size={64} variant="outline" />}
-      {canShowHover && currentPlayer === "x" && <XIcon size={64} variant="outline" />}
+      {canShowHover && currentPlayer === "o" && <OIcon className={styles.icon} variant="outline" />}
+      {canShowHover && currentPlayer === "x" && <XIcon className={styles.icon} variant="outline" />}
 
-      {isSelectedBy === "o" && <OIcon size={64} color={isWinner ? colors.semiDarkNavy : undefined} />}
-      {isSelectedBy === "x" && <XIcon size={64} color={isWinner ? colors.semiDarkNavy : undefined} />}
+      {isSelectedBy === "o" && <OIcon className={styles.icon} color={isWinner ? colors.semiDarkNavy : undefined} />}
+      {isSelectedBy === "x" && <XIcon className={styles.icon} color={isWinner ? colors.semiDarkNavy : undefined} />}
     </div>
   );
 };
