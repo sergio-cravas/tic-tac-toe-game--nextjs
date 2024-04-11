@@ -1,10 +1,7 @@
-import { useCallback, useContext, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useContext, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import { Text } from "@/ui/Text/text";
-import { OIcon } from "@/ui/OIcon/oIcon";
-import { XIcon } from "@/ui/XIcon/xIcon";
-import { Button } from "@/ui/Button/button";
+import { Text, Button, OIcon, XIcon } from "@/ui";
 import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
 import { ScoreContext, ScoreContextProps } from "@/app/play/_shared/context/scoreContext";
 
@@ -12,11 +9,17 @@ import styles from "./winBanner.module.scss";
 
 export const WinBanner = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { resetScore } = useContext<ScoreContextProps>(ScoreContext);
   const { winner, onReset } = useContext<GameContextProps>(GameContext);
 
   const [confirmQuitVisible, setConfirmQuitVisible] = useState<boolean>(false);
+
+  const resultMessage = useMemo(
+    () => (searchParams.get("p1") === winner ? "You won!" : "Oh no, you lost"),
+    [winner, searchParams],
+  );
 
   const handleOnQuit = useCallback(() => {
     setConfirmQuitVisible(true);
@@ -43,12 +46,7 @@ export const WinBanner = () => {
 
       <div className={styles["win-banner__banner"]}>
         {!confirmQuitVisible && (
-          <Text
-            variant="heading"
-            size="extra-small"
-            content="Oh no, you lost"
-            className={styles["win-banner__banner__title"]}
-          />
+          <Text variant="heading" size="extra-small" content={resultMessage} className={styles["win-banner__banner__title"]} />
         )}
 
         {!confirmQuitVisible && (

@@ -4,10 +4,10 @@ import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Text } from "@/ui/Text/text";
-import { Logo } from "@/ui/Logo/logo";
+import { Logo } from "@/ui";
 import { OIcon } from "@/ui/OIcon/oIcon";
 import { XIcon } from "@/ui/XIcon/xIcon";
-import { Button } from "@/ui/Button/button";
+import { Button } from "@/ui";
 import { classNames } from "@/functions/classNames";
 
 import styles from "./page.module.scss";
@@ -20,7 +20,7 @@ export default function Home() {
 
   const handleOnStartNewGame = useCallback(
     (mode: "pvp" | "pve") => {
-      router.push(`/play?pj_1=${playerSelected}&mode=${mode}`);
+      router.push(`/play?p1=${playerSelected}&mode=${mode}`);
     },
     [router, playerSelected],
   );
@@ -64,7 +64,7 @@ export default function Home() {
         </div>
 
         <div className={styles["mode-selection"]}>
-          <Button isDisabled label="New game (vs cpu)" color="yellow" onClick={() => handleOnStartNewGame("pve")} />
+          <Button label="New game (vs cpu)" color="yellow" onClick={() => handleOnStartNewGame("pve")} />
           <Button label="New game (vs player)" color="blue" onClick={() => handleOnStartNewGame("pvp")} />
         </div>
       </div>
