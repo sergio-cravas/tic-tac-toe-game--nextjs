@@ -1,8 +1,9 @@
-@import '@/theme/colors.module.scss';
+@import "@/theme/colors.module.scss";
+@import "@/theme/breakpoints.module.scss";
 
 .tile {
-  width: 140px;
-  height: 140px;
+  width: 96px;
+  height: 96px;
   aspect-ratio: 1;
 
   display: flex;
@@ -16,6 +17,16 @@
   cursor: pointer;
   transition: 0.125s all ease;
 
+  @media (min-width: $tablet) {
+    width: 140px;
+    height: 140px;
+  }
+
+  @media (min-width: $desktop) {
+    // width: 140px;
+    // height: 140px;
+  }
+
   &:hover {
     background-color: lighten($color: $semi-dark-navy, $amount: 2%);
     box-shadow: inset 0px -8px 0px lighten($color: #10212a, $amount: 2%);
@@ -27,5 +38,15 @@
 
   &--is-winner-o {
     background-color: $light-yellow;
+  }
+}
+
+.icon {
+  width: 52px !important;
+  height: 52px !important;
+
+  @media (min-width: $tablet) {
+    width: 64px !important;
+    height: 64px !important;
   }
 }

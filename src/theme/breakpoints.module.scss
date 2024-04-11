@@ -1,0 +1,9 @@
+$desktop: 1440px;
+$tablet: 768px;
+$phone: 375px;
+
+:export {
+  desktop: $desktop;
+  tablet: $tablet;
+  phone: $phone;
+}

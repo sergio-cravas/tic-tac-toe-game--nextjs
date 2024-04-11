@@ -1,4 +1,5 @@
-@import '@/theme/colors.module.scss';
+@import "@/theme/colors.module.scss";
+@import "@/theme/breakpoints.module.scss";
 
 .main {
   display: flex;
@@ -22,7 +23,7 @@
 }
 
 .player-selection {
-  width: 460px;
+  width: 327px;
 
   padding: 1.5rem 1.5rem 1.875rem 1.5rem;
 
@@ -33,6 +34,13 @@
   border-radius: 10px;
   background-color: $semi-dark-navy;
   box-shadow: inset 0px -8px 0px #10212a;
+
+  @media (min-width: $tablet) {
+    width: 460px;
+  }
+
+  @media (min-width: $desktop) {
+  }
 
   &__title {
     margin-bottom: 1.5rem;
