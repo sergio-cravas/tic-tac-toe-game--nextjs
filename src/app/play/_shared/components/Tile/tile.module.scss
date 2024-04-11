@@ -1,8 +1,9 @@
-@import '@/theme/colors.module.scss';
+@import "@/theme/colors.module.scss";
+@import "@/theme/breakpoints.module.scss";
 
 .tile {
-  width: 140px;
-  height: 140px;
+  width: 96px;
+  height: 96px;
   aspect-ratio: 1;
 
   display: flex;
@@ -15,6 +16,16 @@
 
   cursor: pointer;
   transition: 0.125s all ease;
+
+  @media (min-width: $tablet) {
+    width: 140px;
+    height: 140px;
+  }
+
+  @media (min-width: $desktop) {
+    // width: 140px;
+    // height: 140px;
+  }
 
   &:hover {
     background-color: lighten($color: $semi-dark-navy, $amount: 2%);

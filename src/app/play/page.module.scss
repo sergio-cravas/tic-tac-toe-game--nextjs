@@ -1,4 +1,4 @@
-@import '@/theme/colors.module.scss';
+@import "@/theme/colors.module.scss";
 
 .main {
   display: flex;
@@ -10,7 +10,6 @@
   padding: 6rem;
   min-height: 100vh;
 }
-
 
 .container {
   display: flex;
@@ -30,7 +29,8 @@
 
   gap: 20px;
 
-  &__logo, &__restart-button {
+  &__logo,
+  &__restart-button {
     flex: 1;
     display: flex;
   }
