@@ -47,8 +47,8 @@ type GameContextProviderProps = {
 function GameContextProvider({ children }: GameContextProviderProps) {
   const { dispatchWinner } = useContext<ScoreContextProps>(ScoreContext);
 
-  const [winner, setWinner] = useState<Winner>();
   const [tiles, setTiles] = useState<Tiles>(INITIAL_TILES);
+  const [winner, setWinner] = useState<Winner>();
   const [winningTiles, setWinningTiles] = useState<string[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>("x");
 
@@ -93,8 +93,8 @@ function GameContextProvider({ children }: GameContextProviderProps) {
       value={{
         tiles,
         winner,
-        currentPlayer,
         winningTiles,
+        currentPlayer,
         onPlay: handleOnTileClick,
         onReset: handleOnResetGame,
         onCPUPlay: handleOnCPUClick,
