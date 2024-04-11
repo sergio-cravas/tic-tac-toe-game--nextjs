@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { Logo } from "@/ui/Logo/logo";
-import { Button } from "@/ui/Button/button";
+import { Logo } from "@/ui";
+import { Button } from "@/ui";
 import { Tile } from "../Tile/tile.component";
-import { RestartIcon } from "@/ui/RestartIcon/restartIcon.component";
+import { RestartIcon } from "@/ui";
 import { TurnBadge } from "../TurnBadge/turnBadge.component";
 import { ScoreBadge } from "../ScoreBadge/scoreBadge.component";
 import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
