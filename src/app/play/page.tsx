@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useContext, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
+import { useContext } from "react";
 
 import { Logo, Button, RestartIcon } from "@/ui";
 import { Tile } from "./_shared/components/Tile/tile.component";
@@ -18,24 +17,8 @@ const GRID_ROWS = 3;
 const GRID_COLUMNS = 3;
 
 export default function Home() {
-  const searchParams = useSearchParams();
-
   const { winsByX, winsByO, draws } = useContext<ScoreContextProps>(ScoreContext);
-  const { tiles, winner, winningTiles, currentPlayer, onPlay, onCPUPlay, onReset } = useContext<GameContextProps>(GameContext);
-
-  const mode = useMemo(() => searchParams.get("mode"), [searchParams]);
-  const player1 = useMemo(() => searchParams.get("p1"), [searchParams]);
-
-  const handleOnTileClick = useCallback(
-    (row: number, column: number) => {
-      const newTiles = onPlay(row, column, currentPlayer, tiles);
-
-      if (!winner && mode === "pve") {
-        setTimeout(() => onCPUPlay(player1 === "x" ? "o" : "x", newTiles), 500);
-      }
-    },
-    [tiles, mode, winner, player1, currentPlayer, onPlay, onCPUPlay],
-  );
+  const { tiles, winningTiles, currentPlayer, onPlay, onReset } = useContext<GameContextProps>(GameContext);
 
   return (
     <main className={styles.main}>
@@ -61,7 +44,7 @@ export default function Home() {
                   isSelectedBy={tiles[`row${rowIndex}-col${colIndex}`]}
                   isWinner={winningTiles.includes(`row${rowIndex}-col${colIndex}`)}
                   currentPlayer={currentPlayer}
-                  onClick={() => handleOnTileClick(rowIndex, colIndex)}
+                  onClick={() => onPlay(rowIndex, colIndex)}
                 />
               ))}
             </div>
