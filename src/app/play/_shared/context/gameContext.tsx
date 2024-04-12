@@ -13,6 +13,7 @@ interface GameContextProps {
   winner?: Winner;
   winningTiles: string[];
   currentPlayer: PlayerTile;
+  isCPUPlaying: boolean;
   onPlay: (row: number, column: number) => void;
   onReset: () => void;
 }
@@ -33,6 +34,7 @@ const GameContext = createContext<GameContextProps>({
   winningTiles: [],
   currentPlayer: "x",
   tiles: INITIAL_TILES,
+  isCPUPlaying: false,
   onPlay: () => {},
   onReset: () => {},
 });
@@ -50,34 +52,39 @@ function GameContextProvider({ initialPlayer = "x", gameMode = "pvp", children }
   const [winner, setWinner] = useState<Winner>();
   const [winningTiles, setWinningTiles] = useState<string[]>([]);
   const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>(initialPlayer);
+  const [isCPUPlaying, setIsCPUPlaying] = useState<boolean>(false);
 
   const onTileClick = useCallback(
-    (row: number, column: number, player: PlayerTile, tiles: Tiles) => {
+    (row: number, column: number, player: PlayerTile, tiles: Tiles): { tiles: Tiles; winner?: Winner } => {
       const _tiles = { ...tiles, [`row${row}-col${column}`]: player };
 
       const { winner: _winner, winningTiles: _winningTiles } = checkWhoIsWinner(_tiles, player);
 
-      if (_winner) dispatchWinner(_winner);
+      if (_winner) {
+        dispatchWinner(_winner);
+      }
 
       setTiles(_tiles);
       setWinner(_winner);
       setWinningTiles(_winningTiles);
       setCurrentPlayer(player === "o" ? "x" : "o");
 
-      return _tiles;
+      return { tiles: _tiles, winner: _winner };
     },
     [dispatchWinner],
   );
 
   const onCPUClick = useCallback(
     (cpu: PlayerTile, tiles: Tiles) => {
+      if (winner) return;
+
       const coords = getMoveFromCPU(tiles, cpu);
 
       if (coords) {
         onTileClick(coords.row, coords.column, cpu, tiles);
       }
     },
-    [onTileClick],
+    [winner, onTileClick],
   );
 
   const handleOnResetGame = useCallback(() => {
@@ -85,17 +92,23 @@ function GameContextProvider({ initialPlayer = "x", gameMode = "pvp", children }
     setWinner(undefined);
     setWinningTiles([]);
     setCurrentPlayer(initialPlayer);
+    setIsCPUPlaying(false);
   }, [initialPlayer]);
 
   const handleOnPlay = useCallback(
     (row: number, column: number) => {
-      const newTiles = onTileClick(row, column, currentPlayer, tiles);
+      const { tiles: newTiles, winner: newWinner } = onTileClick(row, column, currentPlayer, tiles);
 
-      if (!winner && gameMode === "pve") {
-        setTimeout(() => onCPUClick(initialPlayer === "x" ? "o" : "x", newTiles), 500);
+      if (!newWinner && gameMode === "pve") {
+        setIsCPUPlaying(true);
+
+        setTimeout(() => {
+          onCPUClick(initialPlayer === "x" ? "o" : "x", newTiles);
+          setIsCPUPlaying(false);
+        }, 500);
       }
     },
-    [gameMode, initialPlayer, tiles, winner, currentPlayer, onCPUClick, onTileClick],
+    [gameMode, initialPlayer, tiles, currentPlayer, onCPUClick, onTileClick],
   );
 
   return (
@@ -105,6 +118,7 @@ function GameContextProvider({ initialPlayer = "x", gameMode = "pvp", children }
         winner,
         winningTiles,
         currentPlayer,
+        isCPUPlaying,
         onPlay: handleOnPlay,
         onReset: handleOnResetGame,
       }}

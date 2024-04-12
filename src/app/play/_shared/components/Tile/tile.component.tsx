@@ -7,7 +7,6 @@ import { GameContext, GameContextProps } from "@/app/play/_shared/context/gameCo
 
 import styles from "./tile.module.scss";
 import colors from "@/theme/colors.module.scss";
-import breakpoints from "@/theme/breakpoints.module.scss";
 
 interface TileProps {
   /**
@@ -27,12 +26,16 @@ interface TileProps {
    */
   isWinner?: boolean;
   /**
+   * Sets a disabled state for the tile
+   */
+  isDisabled?: boolean;
+  /**
    * Click handler
    */
   onClick: () => void;
 }
 
-const Tile = ({ isSelectedBy, isWinner, onClick }: TileProps) => {
+const Tile = ({ isSelectedBy, isWinner, isDisabled, onClick }: TileProps) => {
   const { winner, currentPlayer } = useContext<GameContextProps>(GameContext);
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -40,7 +43,8 @@ const Tile = ({ isSelectedBy, isWinner, onClick }: TileProps) => {
   const canShowHover = useMemo(() => !Boolean(winner) && !Boolean(isSelectedBy) && isHover, [isHover, isSelectedBy, winner]);
 
   return (
-    <div
+    <button
+      disabled={isDisabled || Boolean(isSelectedBy)}
       onClick={onClick}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
@@ -51,7 +55,7 @@ const Tile = ({ isSelectedBy, isWinner, onClick }: TileProps) => {
 
       {isSelectedBy === "o" && <OIcon className={styles.icon} color={isWinner ? colors.semiDarkNavy : undefined} />}
       {isSelectedBy === "x" && <XIcon className={styles.icon} color={isWinner ? colors.semiDarkNavy : undefined} />}
-    </div>
+    </button>
   );
 };
 

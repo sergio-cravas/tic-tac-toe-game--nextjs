@@ -1,6 +1,7 @@
 "use client";
 
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
+import { useRouter } from "next/navigation";
 
 import { Logo, Button, RestartIcon } from "@/ui";
 import { Tile } from "./_shared/components/Tile/tile.component";
@@ -17,8 +18,14 @@ const GRID_ROWS = 3;
 const GRID_COLUMNS = 3;
 
 export default function Home() {
+  const router = useRouter();
+
   const { winsByX, winsByO, draws } = useContext<ScoreContextProps>(ScoreContext);
-  const { tiles, winningTiles, currentPlayer, onPlay, onReset } = useContext<GameContextProps>(GameContext);
+  const { tiles, winningTiles, currentPlayer, isCPUPlaying, onPlay } = useContext<GameContextProps>(GameContext);
+
+  const onReturnHome = useCallback(() => {
+    router.push("/");
+  }, [router]);
 
   return (
     <main className={styles.main}>
@@ -31,7 +38,7 @@ export default function Home() {
           <TurnBadge currentPlayer={currentPlayer} />
 
           <div className={styles["head__restart-button"]}>
-            <Button variant="icon-only" color="gray" label={<RestartIcon />} onClick={onReset} />
+            <Button variant="icon-only" color="gray" label={<RestartIcon />} onClick={onReturnHome} />
           </div>
         </div>
 
@@ -43,6 +50,7 @@ export default function Home() {
                   key={`tile-${rowIndex}-${colIndex}`}
                   isSelectedBy={tiles[`row${rowIndex}-col${colIndex}`]}
                   isWinner={winningTiles.includes(`row${rowIndex}-col${colIndex}`)}
+                  isDisabled={isCPUPlaying}
                   currentPlayer={currentPlayer}
                   onClick={() => onPlay(rowIndex, colIndex)}
                 />
