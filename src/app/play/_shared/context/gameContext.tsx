@@ -1,9 +1,10 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext, useCallback, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { ScoreContext, ScoreContextProps } from "./scoreContext";
 
 type PlayerTile = "x" | "o";
+type GameMode = "pvp" | "pve";
 type Winner = "x" | "o" | "draw" | undefined;
 type Tiles = Record<string, PlayerTile | undefined>;
 
@@ -12,10 +13,9 @@ interface GameContextProps {
   winner?: Winner;
   winningTiles: string[];
   currentPlayer: PlayerTile;
-  onPlay: (row: number, column: number, player: PlayerTile, tiles: Tiles) => Tiles;
+  isCPUPlaying: boolean;
+  onPlay: (row: number, column: number) => void;
   onReset: () => void;
-  onCPUPlay: (cpu: PlayerTile, tiles: Tiles) => void;
-  setWinningTiles: Dispatch<SetStateAction<string[]>>;
 }
 
 const INITIAL_TILES: Tiles = {
@@ -34,59 +34,82 @@ const GameContext = createContext<GameContextProps>({
   winningTiles: [],
   currentPlayer: "x",
   tiles: INITIAL_TILES,
-  onPlay: () => INITIAL_TILES,
+  isCPUPlaying: false,
+  onPlay: () => {},
   onReset: () => {},
-  onCPUPlay: () => {},
-  setWinningTiles: () => {},
 });
 
 type GameContextProviderProps = {
+  gameMode?: GameMode;
+  initialPlayer?: PlayerTile;
   children: React.ReactNode;
 };
 
-function GameContextProvider({ children }: GameContextProviderProps) {
+function GameContextProvider({ initialPlayer = "x", gameMode = "pvp", children }: GameContextProviderProps) {
   const { dispatchWinner } = useContext<ScoreContextProps>(ScoreContext);
 
   const [tiles, setTiles] = useState<Tiles>(INITIAL_TILES);
   const [winner, setWinner] = useState<Winner>();
   const [winningTiles, setWinningTiles] = useState<string[]>([]);
-  const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>("x");
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerTile>(initialPlayer);
+  const [isCPUPlaying, setIsCPUPlaying] = useState<boolean>(false);
 
-  const handleOnTileClick = useCallback(
-    (row: number, column: number, player: PlayerTile, tiles: Tiles) => {
+  const onTileClick = useCallback(
+    (row: number, column: number, player: PlayerTile, tiles: Tiles): { tiles: Tiles; winner?: Winner } => {
       const _tiles = { ...tiles, [`row${row}-col${column}`]: player };
 
       const { winner: _winner, winningTiles: _winningTiles } = checkWhoIsWinner(_tiles, player);
 
-      if (_winner) dispatchWinner(_winner);
+      if (_winner) {
+        dispatchWinner(_winner);
+      }
 
       setTiles(_tiles);
       setWinner(_winner);
       setWinningTiles(_winningTiles);
       setCurrentPlayer(player === "o" ? "x" : "o");
 
-      return _tiles;
+      return { tiles: _tiles, winner: _winner };
     },
     [dispatchWinner],
   );
 
-  const handleOnCPUClick = useCallback(
+  const onCPUClick = useCallback(
     (cpu: PlayerTile, tiles: Tiles) => {
+      if (winner) return;
+
       const coords = getMoveFromCPU(tiles, cpu);
 
       if (coords) {
-        handleOnTileClick(coords.row, coords.column, cpu, tiles);
+        onTileClick(coords.row, coords.column, cpu, tiles);
       }
     },
-    [handleOnTileClick],
+    [winner, onTileClick],
   );
 
   const handleOnResetGame = useCallback(() => {
     setTiles(INITIAL_TILES);
     setWinner(undefined);
-    setCurrentPlayer("x");
     setWinningTiles([]);
-  }, []);
+    setCurrentPlayer(initialPlayer);
+    setIsCPUPlaying(false);
+  }, [initialPlayer]);
+
+  const handleOnPlay = useCallback(
+    (row: number, column: number) => {
+      const { tiles: newTiles, winner: newWinner } = onTileClick(row, column, currentPlayer, tiles);
+
+      if (!newWinner && gameMode === "pve") {
+        setIsCPUPlaying(true);
+
+        setTimeout(() => {
+          onCPUClick(initialPlayer === "x" ? "o" : "x", newTiles);
+          setIsCPUPlaying(false);
+        }, 500);
+      }
+    },
+    [gameMode, initialPlayer, tiles, currentPlayer, onCPUClick, onTileClick],
+  );
 
   return (
     <GameContext.Provider
@@ -95,10 +118,9 @@ function GameContextProvider({ children }: GameContextProviderProps) {
         winner,
         winningTiles,
         currentPlayer,
-        onPlay: handleOnTileClick,
+        isCPUPlaying,
+        onPlay: handleOnPlay,
         onReset: handleOnResetGame,
-        onCPUPlay: handleOnCPUClick,
-        setWinningTiles,
       }}
     >
       {children}
@@ -173,7 +195,10 @@ const getMoveFromCPU = (tiles: Tiles, cpu: PlayerTile): { row: number; column: n
 
   if (emptyTiles.length === 0) return undefined;
 
+  // Random selection
   const randomIndex = Math.floor(Math.random() * emptyTiles.length);
+  // TODO
+  // Use "cpu" variable to search more accurate selection.
 
   return parseCoordinate(emptyTiles[randomIndex]);
 };

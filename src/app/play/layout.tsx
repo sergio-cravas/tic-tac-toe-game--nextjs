@@ -1,11 +1,10 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 
-import GameContextProvider from "./_shared/context/gameContext";
-import ScoreContextProvider from "./_shared/context/scoreContext";
+import GlobalProvider from "./_shared/context/globalProvider";
 
 import "@/theme/globals.scss";
-import { Suspense } from "react";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -22,11 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={outfit.className}>
-        <ScoreContextProvider>
-          <GameContextProvider>
-            <Suspense>{children}</Suspense>
-          </GameContextProvider>
-        </ScoreContextProvider>
+        <Suspense>
+          <GlobalProvider>{children}</GlobalProvider>
+        </Suspense>
       </body>
     </html>
   );

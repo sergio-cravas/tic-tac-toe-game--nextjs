@@ -1,5 +1,5 @@
-import { Suspense, useCallback, useContext, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useContext, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Text, Button, OIcon, XIcon } from "@/ui";
 import { GameContextProps, GameContext } from "@/app/play/_shared/context/gameContext";
@@ -8,7 +8,6 @@ import { ScoreContext, ScoreContextProps } from "@/app/play/_shared/context/scor
 import styles from "./winBanner.module.scss";
 
 export const WinBanner = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const { resetScore } = useContext<ScoreContextProps>(ScoreContext);
@@ -16,10 +15,10 @@ export const WinBanner = () => {
 
   const [confirmQuitVisible, setConfirmQuitVisible] = useState<boolean>(false);
 
-  const resultMessage = useMemo(
-    () => (searchParams.get("p1") === winner ? "You won!" : "Oh no, you lost"),
-    [winner, searchParams],
-  );
+  const gameMode = useMemo(() => (searchParams.get("mode") === "pve" ? "pve" : "pvp"), [searchParams]);
+  const initialPlayer = useMemo(() => (searchParams.get("p1") === "o" ? "o" : "x"), [searchParams]);
+
+  const resultMessage = useMemo(() => (initialPlayer === winner ? "You won!" : "Oh no, you lost"), [winner, initialPlayer]);
 
   const handleOnQuit = useCallback(() => {
     setConfirmQuitVisible(true);
@@ -30,9 +29,7 @@ export const WinBanner = () => {
     resetScore();
 
     setConfirmQuitVisible(false);
-
-    router.push("/");
-  }, [router, onReset, resetScore]);
+  }, [onReset, resetScore]);
 
   const handleOnCancelQuit = useCallback(() => {
     setConfirmQuitVisible(false);
@@ -41,53 +38,46 @@ export const WinBanner = () => {
   if (!winner) return <></>;
 
   return (
-    <Suspense>
-      <div className={styles["win-banner"]}>
-        <div className={styles["win-banner__background"]} />
+    <div className={styles["win-banner"]}>
+      <div className={styles["win-banner__background"]} />
 
-        <div className={styles["win-banner__banner"]}>
-          {!confirmQuitVisible && (
+      <div className={styles["win-banner__banner"]}>
+        {!confirmQuitVisible && gameMode === "pve" && (
+          <Text variant="heading" size="extra-small" content={resultMessage} className={styles["win-banner__banner__title"]} />
+        )}
+
+        {!confirmQuitVisible && (
+          <div className={styles["win-banner__banner__winner"]}>
+            {winner === "o" ? <OIcon /> : winner === "x" && <XIcon />}
+
             <Text
               variant="heading"
-              size="extra-small"
-              content={resultMessage}
-              className={styles["win-banner__banner__title"]}
-            />
-          )}
-
-          {!confirmQuitVisible && (
-            <div className={styles["win-banner__banner__winner"]}>
-              {winner === "o" ? <OIcon /> : winner === "x" && <XIcon />}
-
-              <Text
-                variant="heading"
-                size="large"
-                color={winner === "o" ? "yellow" : winner === "x" ? "blue" : undefined}
-                content={winner === "draw" ? "Round tied" : "takes the round"}
-              />
-            </div>
-          )}
-
-          {confirmQuitVisible && (
-            <div className={styles["win-banner__banner__winner"]}>
-              <Text variant="heading" size="large" content="Restart game?" />
-            </div>
-          )}
-
-          <div className={styles["win-banner__banner__buttons"]}>
-            <Button
-              color="gray"
-              label={confirmQuitVisible ? "NO, CANCEL" : "QUIT"}
-              onClick={confirmQuitVisible ? handleOnCancelQuit : handleOnQuit}
-            />
-
-            <Button
-              label={confirmQuitVisible ? "YES, RESTART" : "NEXT ROUND"}
-              onClick={confirmQuitVisible ? handleOnConfirmQuit : onReset}
+              size="large"
+              color={winner === "o" ? "yellow" : winner === "x" ? "blue" : undefined}
+              content={winner === "draw" ? "Round tied" : "takes the round"}
             />
           </div>
+        )}
+
+        {confirmQuitVisible && (
+          <div className={styles["win-banner__banner__winner"]}>
+            <Text variant="heading" size="large" content="Restart game?" />
+          </div>
+        )}
+
+        <div className={styles["win-banner__banner__buttons"]}>
+          <Button
+            color="gray"
+            label={confirmQuitVisible ? "NO, CANCEL" : "QUIT"}
+            onClick={confirmQuitVisible ? handleOnCancelQuit : handleOnQuit}
+          />
+
+          <Button
+            label={confirmQuitVisible ? "YES, RESTART" : "NEXT ROUND"}
+            onClick={confirmQuitVisible ? handleOnConfirmQuit : onReset}
+          />
         </div>
       </div>
-    </Suspense>
+    </div>
   );
 };
